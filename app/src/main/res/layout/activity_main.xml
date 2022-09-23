@@ -8,13 +8,121 @@
 
     <include layout="@layout/content_main" />
 
+    <!--  add note  -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/green_accent"
+        android:tintMode="@color/white"
+        app:srcCompat="@drawable/ic_plus"
+        tools:visibility="invisible" />
+    <!-- delete in home fragment -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_bin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="110dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/red_accent"
+        android:tintMode="@color/white"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_bin"
+        tools:visibility="invisible" />
+    <!-- accept in home fragment -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/red_accent"
+        android:tintMode="@color/white"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_accept"
+        tools:visibility="invisible" />
+    <!-- accept edit note -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_accept_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/red_accent"
+        android:tintMode="@color/white"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_accept"
+        tools:visibility="invisible" />
+    <!-- save edit note -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/green_accent"
+        android:tintMode="@color/white"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_save"
+        tools:visibility="invisible" />
+    <!-- deny edit note -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_deny_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="110dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/green_accent"
+        android:tintMode="@color/white"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_deny"
+        tools:visibility="invisible" />
+    <!-- back home fragment -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/dark_primary"
+        android:tintMode="@color/white"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_back"
+        tools:visibility="invisible" />
+    <!-- delete current note -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_delete_current_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="110dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/red_accent"
+        android:tintMode="@color/white"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_bin"
+        tools:visibility="invisible" />
+    <!-- edit note -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_edit_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/green_accent"
+        android:tintMode="@color/white"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_edit"
+        tools:visibility="invisible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

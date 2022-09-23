@@ -1,13 +1,8 @@
 package com.example.mynotes
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
 import android.view.MenuItem
 import com.example.mynotes.databinding.ActivityMainBinding
 
@@ -24,8 +19,8 @@ class MainActivity : AppCompatActivity() {
         val navController =
             findNavController(R.id.nav_host_fragment_content_main)
 
-        binding.fab.setOnClickListener {
-
+        binding.fabPlus.setOnClickListener {
+            navController.navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
     }
 
