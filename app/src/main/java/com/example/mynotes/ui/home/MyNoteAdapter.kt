@@ -5,7 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotes.R
 import com.example.mynotes.data.MyNote
@@ -33,7 +36,13 @@ class MyNoteAdapter(private val listItem: ArrayList<MyNote>) :
         holder.nameNote.text = element.nameNote
         holder.previewNote.text = element.content
         holder.layout.setOnClickListener {
-            val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment(element.nameNote.text,)
+            val action =
+                FirstFragmentDirections.actionFirstFragmentToSecondFragment(
+                    element.nameNote.toString(),
+                    element.content.toString(),
+                    "seen"
+                )
+            it.findNavController().navigate(action)
         }
     }
 
