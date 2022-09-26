@@ -14,18 +14,21 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.mynotes.databinding.FragmentSecondBinding
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
 class SecondFragment : Fragment() {
+
+    companion object {
+        var MODE : String = ""
+    }
 
     private var _binding: FragmentSecondBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private val detailViewModel: DetailViewModel by viewModels()
+
+    private var nameNote : String = ""
+    private var content : String = ""
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +36,11 @@ class SecondFragment : Fragment() {
     ): View? {
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        arguments?.let {
+            nameNote = it.getString("nameNote").toString()
+            content = it.getString("content").toString()
+            MODE = it.getString("mode").toString()
+        }
         return binding.root
 
     }
@@ -44,6 +52,18 @@ class SecondFragment : Fragment() {
 //        if (binding.editNote.text.isNotEmpty() or binding.editNoteName.text.isNotEmpty()) {
 //            binding.fabSave.isEnabled = true
 //        }
+
+        if (MODE == "seen") {
+            binding.editNoteName.setText(nameNote)
+            binding.editNote.setText(content)
+
+            binding.editNote.isEnabled = false
+            binding.editNoteName.isEnabled = false
+
+            binding.fabSave.visibility = View.INVISIBLE
+            binding.fabDeleteCurrentNote.visibility = View.VISIBLE
+            binding.fabEditNote.visibility = View.VISIBLE
+        }
 
         binding.fabBack.setOnClickListener {
             findNavController().popBackStack()

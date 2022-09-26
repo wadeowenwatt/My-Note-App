@@ -13,20 +13,15 @@ import com.example.mynotes.data.MyNote
 import com.example.mynotes.databinding.FragmentFirstBinding
 import com.example.mynotes.ui.ActivityViewModel
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
-    private val viewModel : ActivityViewModel by activityViewModels()
+    private val viewModel: ActivityViewModel by activityViewModels()
 
-    private lateinit var listItem : ArrayList<MyNote>
+    private lateinit var listItem: ArrayList<MyNote>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,11 +39,27 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.fabPlus.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            val action =
+                FirstFragmentDirections.actionFirstFragmentToSecondFragment(
+                    "",
+                    "",
+                    "create"
+                )
+            findNavController().navigate(action)
         }
 
-        val note1 = MyNote("1", "Note1", "muwhewjhejwhthrhtrtruuthfhgdhgdkhgdjhgfjdhfgjdhfjghdjgh", "sadasd")
-        val note2 = MyNote("2", "Note2", "muwhewjhejwhthrhtrtruuthfhgdhgdkhgdjhgfjdhfgjdhfjghdjgh", "sadasd")
+        val note1 = MyNote(
+            "1",
+            "Note1",
+            "muwhewjhejwhthrhtrtruuthfhgdhgdkhgdjhgfjdhfgjdhfjghdjghsssssssssssssda d sadasdasmmsadassadasdasdasdasdjkhnbwejwhejhwehwehwjehwhejwhejhwjejhwdsdm,m,zmc,mzxxc,mzx,xmc,zmxxxc,mzxcsdawewewe",
+            "sadasd"
+        )
+        val note2 = MyNote(
+            "2",
+            "Note2",
+            "muwhewjhejwhthrhtrtruuthfhgdhgdkhgdjhgfjdhfgjdhfjghdjgh",
+            "sadasd"
+        )
         listItem.add(note1)
         listItem.add(note2)
 
