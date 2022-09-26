@@ -47,6 +47,9 @@ class FirstFragment : Fragment() {
     ): View? {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
+
+
+
         return binding.root
 
     }
@@ -55,13 +58,23 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         dbViewModel.allNotes.observe(viewLifecycleOwner) {
+            if (it.isNullOrEmpty()) {
+                binding.contentForEmpty.visibility = View.VISIBLE
+                binding.fabBin.visibility = View.INVISIBLE
+            } else {
+                binding.contentForEmpty.visibility = View.INVISIBLE
+                binding.fabBin.visibility = View.VISIBLE
+            }
+
             it.let {
                 listItem = it
+                val adapter = MyNoteAdapter(listItem!!)
+                binding.listNote.layoutManager = LinearLayoutManager(requireContext())
+                binding.listNote.adapter = adapter
             }
         }
-
-        Log.e("test", listItem.toString())
 
         binding.fabPlus.setOnClickListener {
             val action =
@@ -73,17 +86,6 @@ class FirstFragment : Fragment() {
                     CURRENT_TIME
                 )
             findNavController().navigate(action)
-        }
-
-        if (listItem.isNullOrEmpty()) {
-            binding.contentForEmpty.visibility = View.VISIBLE
-            binding.fabBin.visibility = View.INVISIBLE
-        } else {
-            binding.contentForEmpty.visibility = View.INVISIBLE
-            binding.fabBin.visibility = View.VISIBLE
-            val adapter = MyNoteAdapter(listItem!!)
-            binding.listNote.layoutManager = LinearLayoutManager(requireContext())
-            binding.listNote.adapter = adapter
         }
 
         binding.fabAccept.setOnClickListener {
