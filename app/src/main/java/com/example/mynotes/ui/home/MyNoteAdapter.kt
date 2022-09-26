@@ -33,7 +33,7 @@ class MyNoteAdapter(private val listItem: ArrayList<MyNote>) :
         holder.nameNote.text = element.nameNote
         holder.previewNote.text = element.content
         holder.layout.setOnClickListener {
-            val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment(element.nameNote.text,)
+
         }
     }
 

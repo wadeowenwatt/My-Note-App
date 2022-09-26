@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.mynotes.databinding.FragmentSecondBinding
 
 /**
@@ -107,6 +108,7 @@ class SecondFragment : Fragment() {
             binding.fabAcceptEdit.visibility = View.INVISIBLE
             binding.fabDenyEdit.visibility = View.INVISIBLE
         }
+
     }
 
     override fun onDestroyView() {
