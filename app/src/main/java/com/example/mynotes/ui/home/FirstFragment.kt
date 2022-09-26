@@ -51,7 +51,7 @@ class FirstFragment : Fragment() {
         val note1 = MyNote(
             "1",
             "Note1",
-            "muwhewjhejwhthrhtrtruuthfhgdhgdkhgdjhgfjdhfgjdhfjghdjgh",
+            "muwhewjhejwhthrhtrtruuthfhgdhgdkhgdjhgfjdhfgjdhfjghdjghsssssssssssssda d sadasdasmmsadassadasdasdasdasdjkhnbwejwhejhwehwehwjehwhejwhejhwjejhwdsdm,m,zmc,mzxxc,mzx,xmc,zmxxxc,mzxcsdawewewe",
             "sadasd"
         )
         val note2 = MyNote(
