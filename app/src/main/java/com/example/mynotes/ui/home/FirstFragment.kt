@@ -1,25 +1,34 @@
 package com.example.mynotes.ui.home
 
+import android.app.DirectAction
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mynotes.R
 import com.example.mynotes.data.MyNote
 import com.example.mynotes.databinding.FragmentFirstBinding
-import com.example.mynotes.ui.ActivityViewModel
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class FirstFragment : Fragment() {
+
+    companion object {
+        private val sdf =
+            SimpleDateFormat("dd MMM yyyy HH:mm", Locale("en", "VietNam"))
+        val CURRENT_TIME: String = sdf.format(Date())
+    }
 
     private var _binding: FragmentFirstBinding? = null
 
     private val binding get() = _binding!!
-
-    private val viewModel: ActivityViewModel by activityViewModels()
 
     private lateinit var listItem: ArrayList<MyNote>
 
@@ -35,6 +44,7 @@ class FirstFragment : Fragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -43,27 +53,38 @@ class FirstFragment : Fragment() {
                 FirstFragmentDirections.actionFirstFragmentToSecondFragment(
                     "",
                     "",
-                    "create"
+                    "create",
+                    CURRENT_TIME
                 )
             findNavController().navigate(action)
         }
 
+
         val note1 = MyNote(
-            "1",
             "Note1",
             "muwhewjhejwhthrhtrtruuthfhgdhgdkhgdjhgfjdhfgjdhfjghdjghsssssssssssssda d sadasdasmmsadassadasdasdasdasdjkhnbwejwhejhwehwehwjehwhejwhejhwjejhwdsdm,m,zmc,mzxxc,mzx,xmc,zmxxxc,mzxcsdawewewe",
-            "sadasd"
+            "13 Mar 2022 3:00"
         )
         val note2 = MyNote(
-            "2",
             "Note2",
             "muwhewjhejwhthrhtrtruuthfhgdhgdkhgdjhgfjdhfgjdhfjghdjgh",
-            "sadasd"
+            "13 June 2022 12:00"
         )
         listItem.add(note1)
         listItem.add(note2)
 
-        val adapter = MyNoteAdapter(listItem)
+        val adapter = MyNoteAdapter(listItem) {
+
+            binding.fabBin.setOnClickListener {
+                binding.fabAccept.visibility = View.VISIBLE
+                binding.fabBin.visibility = View.INVISIBLE
+                binding.fabPlus.visibility = View.INVISIBLE
+
+                // show button bin in item
+
+            }
+
+        }
 
         binding.listNote.layoutManager = LinearLayoutManager(requireContext())
         binding.listNote.adapter = adapter
@@ -76,8 +97,10 @@ class FirstFragment : Fragment() {
             binding.fabBin.visibility = View.VISIBLE
         }
 
-        binding.fabBin.setOnClickListener {
-
+        binding.fabAccept.setOnClickListener {
+            binding.fabAccept.visibility = View.INVISIBLE
+            binding.fabBin.visibility = View.VISIBLE
+            binding.fabPlus.visibility = View.VISIBLE
         }
 
     }

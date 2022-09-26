@@ -13,16 +13,6 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" >
-
-            <argument
-                android:name="nameNote"
-                app:argType="string"
-                android:defaultValue="" />
-            <argument
-                android:name="content"
-                app:argType="string"
-                android:defaultValue="" />
-
         </action>
 
 
@@ -43,6 +33,9 @@
             app:argType="string" />
         <argument
             android:name="mode"
+            app:argType="string" />
+        <argument
+            android:name="timeEdit"
             app:argType="string" />
     </fragment>
 </navigation>
