@@ -1,17 +1,35 @@
 package com.example.mynotes.ui
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.mynotes.data.MyNote
 import com.example.mynotes.data.NoteDao
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 
 class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
+
+    val allNotes: LiveData<List<MyNote>> = noteDao.getNotes().asLiveData()
+
     private fun insertNote(note: MyNote) {
         viewModelScope.launch {
             noteDao.insert(note)
+        }
+    }
+
+    private fun updateNote(note: MyNote) {
+        viewModelScope.launch {
+            noteDao.update(note)
+        }
+    }
+
+    private fun deleteNote(note: MyNote) {
+        viewModelScope.launch {
+            noteDao.delete(note)
+        }
+    }
+
+    private fun getNote(id: Int) {
+        viewModelScope.launch {
+            noteDao.getNote(id)
         }
     }
 
@@ -27,6 +45,20 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
         )
     }
 
+    private fun getUpdatedNoteEntry(
+        noteId: Int,
+        nameNote: String,
+        content: String,
+        timeEdit: String
+    ): MyNote {
+        return MyNote(
+            id = noteId,
+            nameNote = nameNote,
+            content = content,
+            timeEdit = timeEdit
+        )
+    }
+
     fun addNewNote(
         nameNote: String,
         content: String,
@@ -34,6 +66,16 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
     ) {
         val newNote = getNewNoteEntry(nameNote, content, timeEdit)
         insertNote(newNote)
+    }
+
+    fun updateNote(
+        noteId: Int,
+        nameNote: String,
+        content: String,
+        timeEdit: String
+    ) {
+        val noteUpdated = getUpdatedNoteEntry(noteId, nameNote, content, timeEdit)
+        updateNote(noteUpdated)
     }
 
     fun isEntryValid(

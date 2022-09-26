@@ -12,8 +12,7 @@
         tools:layout="@layout/fragment_first">
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" >
-        </action>
+            app:destination="@id/SecondFragment"/>
 
 
     </fragment>
@@ -26,6 +25,9 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
         <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
             android:name="nameNote"
             app:argType="string" />
         <argument
@@ -37,5 +39,6 @@
         <argument
             android:name="timeEdit"
             app:argType="string" />
+
     </fragment>
 </navigation>

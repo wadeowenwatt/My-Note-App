@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "note")
 data class MyNote(
-//    @PrimaryKey(autoGenerate = true)
-//    var id: Int = 0,
-    @NonNull @PrimaryKey @ColumnInfo(name = "name")
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    @NonNull @ColumnInfo(name = "name")
     var nameNote: String,
     @ColumnInfo(name = "content")
     var content: String? = null,

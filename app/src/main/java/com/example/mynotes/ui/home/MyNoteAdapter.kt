@@ -14,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotes.R
 import com.example.mynotes.data.MyNote
 
-class MyNoteAdapter(private val listItem: ArrayList<MyNote>,
-    private val deleteMode : (myListNote: ArrayList<MyNote>) -> Unit) :
+class MyNoteAdapter(private val listItem: List<MyNote>) :
     RecyclerView.Adapter<MyNoteAdapter.MyNoteViewHolder>() {
 
     class MyNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -43,7 +42,8 @@ class MyNoteAdapter(private val listItem: ArrayList<MyNote>,
         holder.layout.setOnClickListener {
             val action =
                 FirstFragmentDirections.actionFirstFragmentToSecondFragment(
-                    element.nameNote.toString(),
+                    element.id,
+                    element.nameNote,
                     element.content.toString(),
                     "seen",
                     element.timeEdit.toString()
@@ -53,18 +53,18 @@ class MyNoteAdapter(private val listItem: ArrayList<MyNote>,
         }
 
 
-            holder.btnDel.visibility = View.VISIBLE
-            holder.btnDel.setOnClickListener {
-                holder.btnDel.visibility = View.INVISIBLE
-                holder.btnAccept.visibility = View.VISIBLE
-                holder.btnDeny.visibility = View.VISIBLE
-            }
+        holder.btnDel.visibility = View.VISIBLE
+        holder.btnDel.setOnClickListener {
+            holder.btnDel.visibility = View.INVISIBLE
+            holder.btnAccept.visibility = View.VISIBLE
+            holder.btnDeny.visibility = View.VISIBLE
+        }
 
-            holder.btnDeny.setOnClickListener {
-                holder.btnDel.visibility = View.VISIBLE
-                holder.btnAccept.visibility = View.INVISIBLE
-                holder.btnDeny.visibility = View.INVISIBLE
-            }
+        holder.btnDeny.setOnClickListener {
+            holder.btnDel.visibility = View.VISIBLE
+            holder.btnAccept.visibility = View.INVISIBLE
+            holder.btnDeny.visibility = View.INVISIBLE
+        }
 
 
 

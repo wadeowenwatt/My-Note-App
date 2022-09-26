@@ -20,14 +20,14 @@ import com.example.mynotes.ui.home.FirstFragment
 class SecondFragment : Fragment() {
 
     companion object {
-        var MODE : String = "create"
+        var MODE: String = "create"
     }
 
     private var _binding: FragmentSecondBinding? = null
 
     private val binding get() = _binding!!
 
-    private val dbViewModel : DbViewModel by activityViewModels {
+    private val dbViewModel: DbViewModel by activityViewModels {
         DbViewModelFactory(
             (activity?.application as MyNotesApplication).database.noteDao()
         )
@@ -35,9 +35,10 @@ class SecondFragment : Fragment() {
 
     lateinit var note: MyNote
 
-    private var nameNote : String = ""
-    private var content : String = ""
-    private var timeEdit : String = ""
+    private var id : Int? = null
+    private var nameNote: String = ""
+    private var content: String = ""
+    private var timeEdit: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +47,7 @@ class SecondFragment : Fragment() {
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
         arguments?.let {
+            id = it.getInt("id")?.toInt()
             nameNote = it.getString("nameNote").toString()
             content = it.getString("content").toString()
             MODE = it.getString("mode").toString()
@@ -66,6 +68,17 @@ class SecondFragment : Fragment() {
     private fun addNewNote() {
         if (isEntryValid()) {
             dbViewModel.addNewNote(
+                binding.editNoteName.text.toString(),
+                binding.editNote.text.toString(),
+                binding.timeWriteNote.text.toString()
+            )
+        }
+    }
+
+    private fun updateNote() {
+        if (isEntryValid()) {
+            dbViewModel.updateNote(
+                6,
                 binding.editNoteName.text.toString(),
                 binding.editNote.text.toString(),
                 binding.timeWriteNote.text.toString()
@@ -150,13 +163,19 @@ class SecondFragment : Fragment() {
             binding.fabDeleteCurrentNote.visibility = View.VISIBLE
             binding.fabEditNote.visibility = View.VISIBLE
 
-            addNewNote()
+            if (MODE == "create") {
+                addNewNote()
+            } else {
+                updateNote()
+            }
 
             // Update edit time
             binding.timeWriteNote.text = FirstFragment.CURRENT_TIME
         }
 
         binding.fabEditNote.setOnClickListener {
+            MODE = "edit"
+
             binding.editNote.isEnabled = true
             binding.editNoteName.isEnabled = true
 
