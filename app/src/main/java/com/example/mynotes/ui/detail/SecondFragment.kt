@@ -77,12 +77,14 @@ class SecondFragment : Fragment() {
 
     private fun updateNote() {
         if (isEntryValid()) {
-            dbViewModel.updateNote(
-                6,
-                binding.editNoteName.text.toString(),
-                binding.editNote.text.toString(),
-                binding.timeWriteNote.text.toString()
-            )
+            id?.let {
+                dbViewModel.updateNote(
+                    it,
+                    binding.editNoteName.text.toString(),
+                    binding.editNote.text.toString(),
+                    binding.timeWriteNote.text.toString()
+                )
+            }
         }
     }
 

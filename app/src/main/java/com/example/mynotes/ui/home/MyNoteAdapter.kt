@@ -47,7 +47,6 @@ class MyNoteAdapter(private val listItem: List<MyNote>) :
                     element.content.toString(),
                     "seen",
                     element.timeEdit.toString()
-
                 )
             it.findNavController().navigate(action)
         }
