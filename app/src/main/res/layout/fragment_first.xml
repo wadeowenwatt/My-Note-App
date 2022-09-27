@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
+    android:layout_margin="30dp"
     tools:context=".ui.home.FirstFragment">
 
     <TextView
@@ -22,11 +22,12 @@
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:iconifiedByDefault="true"
         app:layout_constraintTop_toBottomOf="@id/app_name"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:background="@color/light_secondary"
-        app:queryHint="Search your note's title here ..."/>
-
+        android:background="@drawable/searchview_custom"
+        app:defaultQueryHint="Search your note's title here ..."/>
     <TextView
         android:id="@+id/title_list"
         android:layout_width="wrap_content"
@@ -79,6 +80,7 @@
             android:backgroundTint="@color/green_accent"
             android:tintMode="@color/white"
             app:srcCompat="@drawable/ic_plus"
+            app:backgroundTint="@color/green_accent"
             tools:visibility="visible" />
         <!-- delete in home fragment -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -91,6 +93,7 @@
             android:tintMode="@color/white"
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_bin"
+            app:backgroundTint="@color/red_accent"
             tools:visibility="invisible" />
         <!-- accept in home fragment -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -101,6 +104,7 @@
             android:backgroundTint="@color/red_accent"
             android:tintMode="@color/white"
             android:visibility="invisible"
+            app:backgroundTint="@color/red_accent"
             app:srcCompat="@drawable/ic_accept"
             tools:visibility="invisible" />
 

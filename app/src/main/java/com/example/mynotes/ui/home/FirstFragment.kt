@@ -1,6 +1,7 @@
 package com.example.mynotes.ui.home
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mynotes.MyNotesApplication
-import com.example.mynotes.R
 import com.example.mynotes.databinding.FragmentFirstBinding
 import com.example.mynotes.ui.DbViewModel
 import com.example.mynotes.ui.DbViewModelFactory
@@ -63,6 +63,10 @@ class FirstFragment : Fragment() {
                 return true
             }
         })
+
+        // this code make show hint always in searchview and not focus it (disable block onActionViewExpanded())
+//        binding.searchView.onActionViewExpanded()
+        Handler().postDelayed(Runnable { binding.searchView.clearFocus() }, 300)
 
         dbViewModel.allNotes.observe(viewLifecycleOwner) {
             if (it.isNullOrEmpty()) {

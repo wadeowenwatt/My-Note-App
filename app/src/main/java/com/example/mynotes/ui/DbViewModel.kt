@@ -1,8 +1,6 @@
 package com.example.mynotes.ui
 
-import android.app.Person
 import androidx.lifecycle.*
-import androidx.room.Query
 import com.example.mynotes.data.MyNote
 import com.example.mynotes.data.NoteDao
 import kotlinx.coroutines.launch

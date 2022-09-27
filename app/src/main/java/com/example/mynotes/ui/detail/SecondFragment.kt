@@ -34,7 +34,7 @@ class SecondFragment : Fragment() {
 
     lateinit var note: MyNote
 
-    private var id : Int? = null
+    private var id: Int? = null
     private var nameNote: String = ""
     private var content: String = ""
     private var timeEdit: String = ""
@@ -46,7 +46,7 @@ class SecondFragment : Fragment() {
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
         arguments?.let {
-            id = it.getInt("id")?.toInt()
+            id = it.getInt("id")
             nameNote = it.getString("nameNote").toString()
             content = it.getString("content").toString()
             MODE = it.getString("mode").toString()
@@ -130,15 +130,16 @@ class SecondFragment : Fragment() {
             binding.editNote.isEnabled = false
             binding.editNoteName.isEnabled = false
 
-            binding.fabSave.visibility = View.INVISIBLE
-            binding.fabDeleteCurrentNote.visibility = View.VISIBLE
-            binding.fabEditNote.visibility = View.VISIBLE
-
             if (MODE == "create") {
                 addNewNote()
+                findNavController().popBackStack()
             } else {
                 updateNote()
             }
+
+            binding.fabSave.visibility = View.INVISIBLE
+            binding.fabDeleteCurrentNote.visibility = View.VISIBLE
+            binding.fabEditNote.visibility = View.VISIBLE
 
             // Update edit time
             binding.timeWriteNote.text = FirstFragment.CURRENT_TIME
@@ -163,10 +164,9 @@ class SecondFragment : Fragment() {
         }
 
         binding.fabAcceptEdit.setOnClickListener {
-            findNavController().popBackStack()
-
             // delete item call
             deleteCurrentNote()
+            findNavController().popBackStack()
         }
 
         binding.fabDenyEdit.setOnClickListener {
@@ -193,17 +193,19 @@ class SecondFragment : Fragment() {
                 binding.editNote.text.toString(),
                 binding.timeWriteNote.text.toString()
             )
+
         }
     }
 
-    private fun deleteCurrentNote() {id?.let {
-        dbViewModel.deleteNote(
-            it,
-            binding.editNoteName.text.toString(),
-            binding.editNote.text.toString(),
-            binding.timeWriteNote.text.toString()
-        )
-    }
+    private fun deleteCurrentNote() {
+        id?.let {
+            dbViewModel.deleteNote(
+                it,
+                binding.editNoteName.text.toString(),
+                binding.editNote.text.toString(),
+                binding.timeWriteNote.text.toString()
+            )
+        }
     }
 
     private fun updateNote() {
