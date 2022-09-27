@@ -75,6 +75,16 @@ class SecondFragment : Fragment() {
         }
     }
 
+    private fun deleteCurrentNote() {id?.let {
+        dbViewModel.deleteNote(
+            it,
+            binding.editNoteName.text.toString(),
+            binding.editNote.text.toString(),
+            binding.timeWriteNote.text.toString()
+        )
+    }
+    }
+
     private fun updateNote() {
         if (isEntryValid()) {
             id?.let {
@@ -197,6 +207,7 @@ class SecondFragment : Fragment() {
             findNavController().popBackStack()
 
             // delete item call
+            deleteCurrentNote()
         }
 
         binding.fabDenyEdit.setOnClickListener {

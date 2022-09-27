@@ -78,6 +78,16 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
         updateNote(noteUpdated)
     }
 
+    fun deleteNote(
+        noteId: Int,
+        nameNote: String,
+        content: String,
+        timeEdit: String
+    ) {
+        val noteDelete = getUpdatedNoteEntry(noteId, nameNote, content, timeEdit)
+        deleteNote(noteDelete)
+    }
+
     fun isEntryValid(
         nameNote: String,
         content: String,
