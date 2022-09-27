@@ -1,6 +1,8 @@
 package com.example.mynotes.ui
 
+import android.app.Person
 import androidx.lifecycle.*
+import androidx.room.Query
 import com.example.mynotes.data.MyNote
 import com.example.mynotes.data.NoteDao
 import kotlinx.coroutines.launch
@@ -86,6 +88,10 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
     ) {
         val noteDelete = getUpdatedNoteEntry(noteId, nameNote, content, timeEdit)
         deleteNote(noteDelete)
+    }
+
+    fun searchNote(searchQuery: String): LiveData<List<MyNote>> {
+        return noteDao.searchNote(searchQuery).asLiveData()
     }
 
     fun isEntryValid(

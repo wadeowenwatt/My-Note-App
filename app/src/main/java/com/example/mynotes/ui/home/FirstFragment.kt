@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -38,7 +39,6 @@ class FirstFragment : Fragment() {
         DbViewModelFactory(
             (activity?.application as MyNotesApplication).database.noteDao()
         )
-
     }
 
     override fun onCreateView(
@@ -47,17 +47,38 @@ class FirstFragment : Fragment() {
     ): View? {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
-
-
-
         return binding.root
 
+    }
+
+    private fun searchDatabase(query: String) {
+        val searchQuery = "%$query%"
+
+        dbViewModel.searchNote(searchQuery).observe(viewLifecycleOwner) {
+            it.let {
+                listItem = it
+                val adapter = MyNoteAdapter(listItem!!)
+                binding.listNote.layoutManager = LinearLayoutManager(requireContext())
+                binding.listNote.adapter = adapter
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                searchDatabase(query)
+                return true
+            }
+        })
 
         dbViewModel.allNotes.observe(viewLifecycleOwner) {
             if (it.isNullOrEmpty()) {
