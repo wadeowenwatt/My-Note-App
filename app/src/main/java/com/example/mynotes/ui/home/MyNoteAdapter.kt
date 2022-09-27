@@ -32,9 +32,6 @@ class MyNoteAdapter :
         val nameNote: TextView = itemView.findViewById(R.id.name_of_note)
         val previewNote: TextView = itemView.findViewById(R.id.preview_note)
         val layout: LinearLayout = itemView.findViewById(R.id.big_layout)
-        val btnDel: ImageView = itemView.findViewById(R.id.delete_button)
-        val btnAccept: ImageView = itemView.findViewById(R.id.accept_button)
-        val btnDeny: ImageView = itemView.findViewById(R.id.deny_button)
     }
 
     override fun onCreateViewHolder(
@@ -43,6 +40,33 @@ class MyNoteAdapter :
     ): MyNoteViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_note_preview, parent, false)
+
+        val btnDel: ImageView = itemView.findViewById(R.id.delete_button)
+        val btnAccept: ImageView = itemView.findViewById(R.id.accept_button)
+        val btnDeny: ImageView = itemView.findViewById(R.id.deny_button)
+
+        when (viewType) {
+            0 -> {
+                btnDel.visibility = View.INVISIBLE
+                btnAccept.visibility = View.INVISIBLE
+                btnDel.visibility = View.INVISIBLE
+            }
+            1 -> {
+                btnDel.visibility = View.VISIBLE
+                btnDel.setOnClickListener {
+                    btnDel.visibility = View.INVISIBLE
+                    btnAccept.visibility = View.VISIBLE
+                    btnDeny.visibility = View.VISIBLE
+                }
+
+                btnDeny.setOnClickListener {
+                    btnDel.visibility = View.VISIBLE
+                    btnAccept.visibility = View.INVISIBLE
+                    btnDeny.visibility = View.INVISIBLE
+                }
+            }
+        }
+
         return MyNoteViewHolder(itemView)
     }
 
@@ -60,20 +84,6 @@ class MyNoteAdapter :
                     element.timeEdit.toString()
                 )
             it.findNavController().navigate(action)
-        }
-
-
-        holder.btnDel.visibility = View.VISIBLE
-        holder.btnDel.setOnClickListener {
-            holder.btnDel.visibility = View.INVISIBLE
-            holder.btnAccept.visibility = View.VISIBLE
-            holder.btnDeny.visibility = View.VISIBLE
-        }
-
-        holder.btnDeny.setOnClickListener {
-            holder.btnDel.visibility = View.VISIBLE
-            holder.btnAccept.visibility = View.INVISIBLE
-            holder.btnDeny.visibility = View.INVISIBLE
         }
 
     }

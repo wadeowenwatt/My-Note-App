@@ -14,5 +14,7 @@ data class MyNote(
     @ColumnInfo(name = "content")
     var content: String? = null,
     @ColumnInfo(name = "time")
-    var timeEdit: String? = null
+    var timeEdit: String? = null,
+    @ColumnInfo
+    var viewType: Int = 0
 )

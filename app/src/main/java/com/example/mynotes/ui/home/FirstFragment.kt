@@ -38,6 +38,10 @@ class FirstFragment : Fragment() {
         )
     }
 
+    private fun changeToDelMode(type: Int) {
+        dbViewModel.changeMode(type)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -96,6 +100,9 @@ class FirstFragment : Fragment() {
             binding.fabAccept.visibility = View.INVISIBLE
             binding.fabBin.visibility = View.VISIBLE
             binding.fabPlus.visibility = View.VISIBLE
+
+            // disable del mode
+            changeToDelMode(0)
         }
 
         binding.fabBin.setOnClickListener {
@@ -104,7 +111,7 @@ class FirstFragment : Fragment() {
             binding.fabPlus.visibility = View.INVISIBLE
 
             // show button bin in item
-
+            changeToDelMode(1)
         }
 
     }

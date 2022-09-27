@@ -34,7 +34,7 @@ class SecondFragment : Fragment() {
 
     lateinit var note: MyNote
 
-    private var id : Int? = null
+    private var id: Int? = null
     private var nameNote: String = ""
     private var content: String = ""
     private var timeEdit: String = ""
@@ -191,19 +191,22 @@ class SecondFragment : Fragment() {
             dbViewModel.addNewNote(
                 binding.editNoteName.text.toString(),
                 binding.editNote.text.toString(),
-                binding.timeWriteNote.text.toString()
+                binding.timeWriteNote.text.toString(),
+                1
             )
         }
     }
 
-    private fun deleteCurrentNote() {id?.let {
-        dbViewModel.deleteNote(
-            it,
-            binding.editNoteName.text.toString(),
-            binding.editNote.text.toString(),
-            binding.timeWriteNote.text.toString()
-        )
-    }
+    private fun deleteCurrentNote() {
+        id?.let {
+            dbViewModel.deleteNote(
+                it,
+                binding.editNoteName.text.toString(),
+                binding.editNote.text.toString(),
+                binding.timeWriteNote.text.toString(),
+                1
+            )
+        }
     }
 
     private fun updateNote() {
@@ -213,7 +216,8 @@ class SecondFragment : Fragment() {
                     it,
                     binding.editNoteName.text.toString(),
                     binding.editNote.text.toString(),
-                    binding.timeWriteNote.text.toString()
+                    binding.timeWriteNote.text.toString(),
+                    1
                 )
             }
         }

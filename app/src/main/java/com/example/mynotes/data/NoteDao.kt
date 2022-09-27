@@ -22,4 +22,7 @@ interface NoteDao {
 
     @Query("SELECT * FROM note WHERE name LIKE :searchQuery")
     fun searchNote(searchQuery: String): Flow<List<MyNote>>
+
+    @Query("UPDATE note SET viewType = :viewType")
+    fun updateViewType(viewType: Int): Flow<List<MyNote>>
 }
