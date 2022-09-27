@@ -3,11 +3,10 @@ package com.example.mynotes.ui.detail
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mynotes.MyNotesApplication
@@ -57,46 +56,6 @@ class SecondFragment : Fragment() {
 
     }
 
-    private fun isEntryValid(): Boolean {
-        return dbViewModel.isEntryValid(
-            binding.editNoteName.text.toString(),
-            binding.editNote.text.toString(),
-            binding.timeWriteNote.text.toString()
-        )
-    }
-
-    private fun addNewNote() {
-        if (isEntryValid()) {
-            dbViewModel.addNewNote(
-                binding.editNoteName.text.toString(),
-                binding.editNote.text.toString(),
-                binding.timeWriteNote.text.toString()
-            )
-        }
-    }
-
-    private fun deleteCurrentNote() {id?.let {
-        dbViewModel.deleteNote(
-            it,
-            binding.editNoteName.text.toString(),
-            binding.editNote.text.toString(),
-            binding.timeWriteNote.text.toString()
-        )
-    }
-    }
-
-    private fun updateNote() {
-        if (isEntryValid()) {
-            id?.let {
-                dbViewModel.updateNote(
-                    it,
-                    binding.editNoteName.text.toString(),
-                    binding.editNote.text.toString(),
-                    binding.timeWriteNote.text.toString()
-                )
-            }
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -217,6 +176,47 @@ class SecondFragment : Fragment() {
             binding.fabDenyEdit.visibility = View.INVISIBLE
         }
 
+    }
+
+    private fun isEntryValid(): Boolean {
+        return dbViewModel.isEntryValid(
+            binding.editNoteName.text.toString(),
+            binding.editNote.text.toString(),
+            binding.timeWriteNote.text.toString()
+        )
+    }
+
+    private fun addNewNote() {
+        if (isEntryValid()) {
+            dbViewModel.addNewNote(
+                binding.editNoteName.text.toString(),
+                binding.editNote.text.toString(),
+                binding.timeWriteNote.text.toString()
+            )
+        }
+    }
+
+    private fun deleteCurrentNote() {id?.let {
+        dbViewModel.deleteNote(
+            it,
+            binding.editNoteName.text.toString(),
+            binding.editNote.text.toString(),
+            binding.timeWriteNote.text.toString()
+        )
+    }
+    }
+
+    private fun updateNote() {
+        if (isEntryValid()) {
+            id?.let {
+                dbViewModel.updateNote(
+                    it,
+                    binding.editNoteName.text.toString(),
+                    binding.editNote.text.toString(),
+                    binding.timeWriteNote.text.toString()
+                )
+            }
+        }
     }
 
     override fun onDestroyView() {

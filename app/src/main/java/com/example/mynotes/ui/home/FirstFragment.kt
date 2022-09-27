@@ -1,19 +1,16 @@
 package com.example.mynotes.ui.home
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mynotes.MyNotesApplication
-import com.example.mynotes.data.MyNote
+import com.example.mynotes.R
 import com.example.mynotes.databinding.FragmentFirstBinding
 import com.example.mynotes.ui.DbViewModel
 import com.example.mynotes.ui.DbViewModelFactory
@@ -35,8 +32,6 @@ class FirstFragment : Fragment() {
 
     private val adapter = MyNoteAdapter()
 
-    private var listItem: List<MyNote>? = null
-
     private val dbViewModel : DbViewModel by activityViewModels {
         DbViewModelFactory(
             (activity?.application as MyNotesApplication).database.noteDao()
@@ -53,19 +48,7 @@ class FirstFragment : Fragment() {
 
     }
 
-    private fun searchDatabase(query: String) {
-        val searchQuery = "%$query%"
 
-        dbViewModel.searchNote(searchQuery).observe(viewLifecycleOwner) {
-            it.let {
-                adapter.submitList(it)
-                binding.listNote.layoutManager = LinearLayoutManager(requireContext())
-                binding.listNote.adapter = adapter
-            }
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -124,6 +107,18 @@ class FirstFragment : Fragment() {
 
         }
 
+    }
+
+    private fun searchDatabase(query: String) {
+        val searchQuery = "%$query%"
+
+        dbViewModel.searchNote(searchQuery).observe(viewLifecycleOwner) {
+            it.let {
+                adapter.submitList(it)
+                binding.listNote.layoutManager = LinearLayoutManager(requireContext())
+                binding.listNote.adapter = adapter
+            }
+        }
     }
 
     override fun onDestroyView() {
