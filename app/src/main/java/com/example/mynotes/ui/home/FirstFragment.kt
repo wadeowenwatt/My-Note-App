@@ -33,6 +33,8 @@ class FirstFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    private val adapter = MyNoteAdapter()
+
     private var listItem: List<MyNote>? = null
 
     private val dbViewModel : DbViewModel by activityViewModels {
@@ -56,8 +58,7 @@ class FirstFragment : Fragment() {
 
         dbViewModel.searchNote(searchQuery).observe(viewLifecycleOwner) {
             it.let {
-                listItem = it
-                val adapter = MyNoteAdapter(listItem!!)
+                adapter.submitList(it)
                 binding.listNote.layoutManager = LinearLayoutManager(requireContext())
                 binding.listNote.adapter = adapter
             }
@@ -90,8 +91,7 @@ class FirstFragment : Fragment() {
             }
 
             it.let {
-                listItem = it
-                val adapter = MyNoteAdapter(listItem!!)
+                adapter.submitList(it)
                 binding.listNote.layoutManager = LinearLayoutManager(requireContext())
                 binding.listNote.adapter = adapter
             }

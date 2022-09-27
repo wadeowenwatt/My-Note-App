@@ -6,16 +6,27 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.recyclerview.widget.ListAdapter
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotes.R
 import com.example.mynotes.data.MyNote
 
-class MyNoteAdapter(private val listItem: List<MyNote>) :
-    RecyclerView.Adapter<MyNoteAdapter.MyNoteViewHolder>() {
+class MyNoteAdapter :
+    ListAdapter<MyNote, MyNoteAdapter.MyNoteViewHolder>(DiffCallback) {
+
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<MyNote>() {
+            override fun areItemsTheSame(oldItem: MyNote, newItem: MyNote): Boolean {
+                return oldItem === newItem
+            }
+
+            override fun areContentsTheSame(oldItem: MyNote, newItem: MyNote): Boolean {
+                return oldItem.nameNote == newItem.nameNote
+            }
+        }
+    }
 
     class MyNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameNote: TextView = itemView.findViewById(R.id.name_of_note)
@@ -36,7 +47,7 @@ class MyNoteAdapter(private val listItem: List<MyNote>) :
     }
 
     override fun onBindViewHolder(holder: MyNoteViewHolder, position: Int) {
-        val element = listItem[position]
+        val element = getItem(position)
         holder.nameNote.text = element.nameNote
         holder.previewNote.text = element.content
         holder.layout.setOnClickListener {
@@ -65,9 +76,7 @@ class MyNoteAdapter(private val listItem: List<MyNote>) :
             holder.btnDeny.visibility = View.INVISIBLE
         }
 
-
-
     }
-
-    override fun getItemCount(): Int = listItem.size
 }
+
+
