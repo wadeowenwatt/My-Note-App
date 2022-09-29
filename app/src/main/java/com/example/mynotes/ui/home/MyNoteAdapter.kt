@@ -59,20 +59,29 @@ class MyNoteAdapter :
         parent: ViewGroup,
         viewType: Int
     ): RecyclerView.ViewHolder {
-        when (viewType) {
+        return when (viewType) {
             0 -> {
                 val itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_note_preview, parent, false)
-                return MyNoteViewHolder(itemView)
+                MyNoteViewHolder(itemView)
+            }
+            1 -> {
+                val itemView = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_note_preview_1, parent, false)
+                MyNoteViewHolder1(itemView)
             }
             else -> {
                 val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_note_preview_1, parent, false)
-                return MyNoteViewHolder1(itemView)
+                    .inflate(R.layout.item_note_preview_2, parent, false)
+                MyNoteViewHolder2(itemView)
             }
         }
     }
 
+    override fun getItemViewType(position: Int): Int {
+        val element = getItem(position)
+        return element.viewType
+    }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
@@ -80,26 +89,25 @@ class MyNoteAdapter :
     ) {
         val element = getItem(position)
 
-        when (element.viewType) {
-            0 -> run {
-                (holder as MyNoteViewHolder).nameNote.text = element.nameNote
-                holder.previewNote.text = element.content
-                holder.layout.setOnClickListener {
-                    val action =
-                        FirstFragmentDirections.actionFirstFragmentToSecondFragment(
-                            element.id,
-                            element.nameNote,
-                            element.content.toString(),
-                            "seen",
-                            element.timeEdit.toString()
-                        )
-                    it.findNavController().navigate(action)
-                }
+        if (holder is MyNoteViewHolder) {
+            holder.nameNote.text = element.nameNote
+            holder.previewNote.text = element.content
+            holder.layout.setOnClickListener {
+                val action =
+                    FirstFragmentDirections.actionFirstFragmentToSecondFragment(
+                        element.id,
+                        element.nameNote,
+                        element.content.toString(),
+                        "seen",
+                        element.timeEdit.toString()
+                    )
+                it.findNavController().navigate(action)
             }
-            1 -> run {
-                (holder as MyNoteViewHolder1).nameNote.text = element.nameNote
-                (holder as MyNoteViewHolder1).previewNote.text = element.content
-                (holder as MyNoteViewHolder1).btnDel.setOnClickListener {  }
+        } else if (holder is MyNoteViewHolder1) {
+            holder.nameNote.text = element.nameNote
+            holder.previewNote.text = element.content
+            holder.btnDel.setOnClickListener {
+
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.mynotes.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,6 +81,40 @@ class FirstFragment : Fragment() {
             }
         }
 
+        binding.fabBin.setOnClickListener {
+            binding.fabAccept.visibility = View.VISIBLE
+            binding.fabBin.visibility = View.INVISIBLE
+            binding.fabPlus.visibility = View.INVISIBLE
+
+            // show button bin in item
+            dbViewModel.changeViewType()
+            Log.e("test", dbViewModel.allNotes.value.toString())
+            dbViewModel.allNotes.observe(viewLifecycleOwner) {
+                it.let {
+                    adapter.submitList(it)
+                    binding.listNote.layoutManager = LinearLayoutManager(requireContext())
+                    binding.listNote.adapter = adapter
+                }
+            }
+        }
+
+        binding.fabAccept.setOnClickListener {
+            binding.fabAccept.visibility = View.INVISIBLE
+            binding.fabBin.visibility = View.VISIBLE
+            binding.fabPlus.visibility = View.VISIBLE
+
+            // disable del mode
+            dbViewModel.changeViewType()
+            Log.e("test", dbViewModel.allNotes.value.toString())
+            dbViewModel.allNotes.observe(viewLifecycleOwner) {
+                it.let {
+                    adapter.submitList(it)
+                    binding.listNote.layoutManager = LinearLayoutManager(requireContext())
+                    binding.listNote.adapter = adapter
+                }
+            }
+        }
+
         binding.fabPlus.setOnClickListener {
             val action =
                 FirstFragmentDirections.actionFirstFragmentToSecondFragment(
@@ -90,24 +125,6 @@ class FirstFragment : Fragment() {
                     CURRENT_TIME
                 )
             findNavController().navigate(action)
-        }
-
-        binding.fabAccept.setOnClickListener {
-            binding.fabAccept.visibility = View.INVISIBLE
-            binding.fabBin.visibility = View.VISIBLE
-            binding.fabPlus.visibility = View.VISIBLE
-
-            // disable del mode
-            changeToDelMode(0)
-        }
-
-        binding.fabBin.setOnClickListener {
-            binding.fabAccept.visibility = View.VISIBLE
-            binding.fabBin.visibility = View.INVISIBLE
-            binding.fabPlus.visibility = View.INVISIBLE
-
-            // show button bin in item
-            changeToDelMode(1)
         }
 
     }
@@ -122,10 +139,6 @@ class FirstFragment : Fragment() {
                 binding.listNote.adapter = adapter
             }
         }
-    }
-
-    private fun changeToDelMode(type: Int) {
-        dbViewModel.changeMode(type)
     }
 
     override fun onDestroyView() {

@@ -192,7 +192,7 @@ class SecondFragment : Fragment() {
                 binding.editNoteName.text.toString(),
                 binding.editNote.text.toString(),
                 binding.timeWriteNote.text.toString(),
-                1
+                0
             )
         }
     }
@@ -204,7 +204,7 @@ class SecondFragment : Fragment() {
                 binding.editNoteName.text.toString(),
                 binding.editNote.text.toString(),
                 binding.timeWriteNote.text.toString(),
-                1
+                0
             )
         }
     }
@@ -217,7 +217,7 @@ class SecondFragment : Fragment() {
                     binding.editNoteName.text.toString(),
                     binding.editNote.text.toString(),
                     binding.timeWriteNote.text.toString(),
-                    1
+                    0
                 )
             }
         }

@@ -1,16 +1,27 @@
 package com.example.mynotes.ui
 
-import android.app.Person
 import androidx.lifecycle.*
-import androidx.room.Query
 import com.example.mynotes.data.MyNote
 import com.example.mynotes.data.NoteDao
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
 class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
 
+    companion object {
+
+    }
+
     val allNotes: LiveData<List<MyNote>> = noteDao.getNotes().asLiveData()
+
+    fun changeViewType() {
+        for (i in allNotes.value!!.indices) {
+            if (allNotes.value!![i].viewType == 0) {
+                allNotes.value!![i].viewType = 1
+            } else {
+                allNotes.value!![i].viewType = 0
+            }
+        }
+    }
 
     private fun insertNote(note: MyNote) {
         viewModelScope.launch {
@@ -36,11 +47,11 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
         }
     }
 
-    private fun updateViewType(type: Int) {
-        viewModelScope.launch {
-            noteDao.updateViewType(type)
-        }
-    }
+//    private fun updateViewType(note: MyNote) {
+//        viewModelScope.launch {
+//            noteDao.update(note)
+//        }
+//    }
 
     private fun getNewNoteEntry(
         nameNote: String,
@@ -108,10 +119,6 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
 
     fun searchNote(searchQuery: String): LiveData<List<MyNote>> {
         return noteDao.searchNote(searchQuery).asLiveData()
-    }
-
-    fun changeMode(type: Int) {
-        noteDao.updateViewType(type)
     }
 
     fun isEntryValid(
