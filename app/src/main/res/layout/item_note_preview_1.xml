@@ -59,8 +59,8 @@
         android:layout_height="46dp"
         android:backgroundTint="@color/red_accent"
         android:layout_gravity="bottom"
-        android:visibility="gone"
-        tools:visibility="gone">
+        android:visibility="visible"
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/delete_button"

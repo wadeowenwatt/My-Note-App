@@ -24,5 +24,5 @@ interface NoteDao {
     fun searchNote(searchQuery: String): Flow<List<MyNote>>
 
     @Query("UPDATE note SET viewType = :viewType")
-    fun updateViewType(viewType: Int): Flow<List<MyNote>>
+    fun updateViewType(viewType: Int)
 }

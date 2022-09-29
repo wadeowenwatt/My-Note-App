@@ -38,10 +38,6 @@ class FirstFragment : Fragment() {
         )
     }
 
-    private fun changeToDelMode(type: Int) {
-        dbViewModel.changeMode(type)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -126,6 +122,10 @@ class FirstFragment : Fragment() {
                 binding.listNote.adapter = adapter
             }
         }
+    }
+
+    private fun changeToDelMode(type: Int) {
+        dbViewModel.changeMode(type)
     }
 
     override fun onDestroyView() {

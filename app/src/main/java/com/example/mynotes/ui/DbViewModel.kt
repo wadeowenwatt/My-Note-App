@@ -6,6 +6,7 @@ import androidx.room.Query
 import com.example.mynotes.data.MyNote
 import com.example.mynotes.data.NoteDao
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
 
@@ -110,7 +111,7 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
     }
 
     fun changeMode(type: Int) {
-        updateViewType(type)
+        noteDao.updateViewType(type)
     }
 
     fun isEntryValid(
