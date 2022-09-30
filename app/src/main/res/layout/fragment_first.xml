@@ -4,45 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
+    android:layout_marginTop="30dp"
     tools:context=".ui.home.FirstFragment">
 
     <TextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Notes"
+        android:layout_marginHorizontal="30dp"
         android:fontFamily="@font/bold_poppins"
-        android:textSize="36sp"
+        android:text="My Notes"
         android:textColor="@color/dark_primary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:textSize="36sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/app_name"
+        android:layout_marginHorizontal="30dp"
+        android:background="@drawable/searchview_custom"
+        android:iconifiedByDefault="true"
+        android:layoutDirection="rtl"
+        app:defaultQueryHint="Search your note's title here ..."
         app:layout_constraintLeft_toLeftOf="parent"
-        android:background="@color/light_secondary"
-        app:queryHint="Search your note's title here ..."/>
+        app:layout_constraintTop_toBottomOf="@id/app_name" />
 
     <TextView
         android:id="@+id/title_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Note List"
-        android:fontFamily="@font/semi_bold_poppins"
-        android:textSize="24sp"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="24dp"
+        android:fontFamily="@font/semi_bold_poppins"
+        android:text="Note List"
         android:textColor="@color/dark_primary"
-        app:layout_constraintTop_toBottomOf="@id/search_view"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_view" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_note"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -54,10 +60,11 @@
         android:id="@+id/content_for_empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
         android:fontFamily="@font/medium_poppins"
-        android:textSize="18sp"
-        android:textColor="@color/red_accent"
         android:text="Add your first note please :D"
+        android:textColor="@color/red_accent"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_list" />
@@ -68,7 +75,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <!--  add note  -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -76,8 +83,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
+            android:layout_margin="30dp"
             android:backgroundTint="@color/green_accent"
             android:tintMode="@color/white"
+            app:backgroundTint="@color/green_accent"
             app:srcCompat="@drawable/ic_plus"
             tools:visibility="visible" />
         <!-- delete in home fragment -->
@@ -86,10 +95,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginEnd="80dp"
+            android:layout_marginEnd="110dp"
+            android:layout_marginBottom="30dp"
             android:backgroundTint="@color/red_accent"
             android:tintMode="@color/white"
             android:visibility="invisible"
+            app:backgroundTint="@color/red_accent"
             app:srcCompat="@drawable/ic_bin"
             tools:visibility="invisible" />
         <!-- accept in home fragment -->
@@ -98,9 +109,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
+            android:layout_margin="30dp"
             android:backgroundTint="@color/red_accent"
             android:tintMode="@color/white"
             android:visibility="invisible"
+            app:backgroundTint="@color/red_accent"
             app:srcCompat="@drawable/ic_accept"
             tools:visibility="invisible" />
 

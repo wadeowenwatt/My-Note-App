@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+
+        <entry key="..\:/Android Kotlin/My-Note-App/app/src/main/res/drawable/edittext_custom.xml" value="0.1" />
+        <entry key="..\:/Android Kotlin/My-Note-App/app/src/main/res/drawable/searchview_custom.xml" value="0.1365" />
         <entry key="..\:/Android Kotlin/My-Note-App/app/src/main/res/layout/item_note_preview.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/btn_state.xml" value="0.1665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />

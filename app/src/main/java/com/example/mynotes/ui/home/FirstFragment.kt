@@ -2,6 +2,7 @@ package com.example.mynotes.ui.home
 
 import android.os.Bundle
 import android.util.Log
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,6 +67,12 @@ class FirstFragment : Fragment() {
             }
         })
 
+
+        
+        // this code make show hint always in searchview and not focus it (disable block onActionViewExpanded())
+        // binding.searchView.onActionViewExpanded()
+        // Handler().postDelayed(Runnable { binding.searchView.clearFocus() }, 300)
+        
         // Observe List data and show
         dbViewModel.allNotes.observe(viewLifecycleOwner) {
             if (HOME_STATE == "Default") {
