@@ -72,12 +72,21 @@ class MyNoteAdapter(
             }
             1 -> {
                 val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_note_preview_1, parent, false)
+                    .inflate(R.layout.item_note_preview, parent, false)
+                val btnDel: ImageButton = itemView.findViewById(R.id.delete_button)
+                btnDel.visibility = View.VISIBLE
+
                 MyNoteViewHolder1(itemView)
             }
             else -> {
                 val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_note_preview_2, parent, false)
+                    .inflate(R.layout.item_note_preview, parent, false)
+                val btnDel: ImageButton = itemView.findViewById(R.id.delete_button)
+                val layoutConfirm: LinearLayout = itemView.findViewById(R.id.accept_deny_layout)
+
+                btnDel.visibility = View.GONE
+                layoutConfirm.visibility = View.VISIBLE
+
                 MyNoteViewHolder2(itemView)
             }
         }

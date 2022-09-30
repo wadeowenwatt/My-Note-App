@@ -53,70 +53,42 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/delete_btn_layout"
+    <ImageButton
+        android:id="@+id/delete_button"
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:backgroundTint="@color/red_accent"
-        android:layout_gravity="bottom"
-        android:visibility="gone"
-        tools:visibility="gone">
-
-        <ImageView
-            android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_bin"
-            android:layout_gravity="center" />
-
-    </androidx.cardview.widget.CardView>
+        android:background="@drawable/button_delete"
+        android:src="@drawable/ic_bin"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/accept_deny_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
         android:layout_gravity="bottom"
+        android:orientation="horizontal"
         android:visibility="gone"
-        tools:visibility="gone">
+        android:weightSum="2" >
 
-        <androidx.cardview.widget.CardView
+        <ImageButton
+            android:id="@+id/deny_button"
             android:layout_width="0dp"
             android:layout_height="46dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:backgroundTint="@color/green_accent"
-            android:layout_gravity="bottom" >
+            android:background="@drawable/button_accept"
+            android:src="@drawable/ic_deny_vector" />
 
-            <ImageView
-                android:id="@+id/deny_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleX="0.6"
-                android:scaleY="0.6"
-                android:src="@drawable/ic_deny"
-                android:layout_gravity="center" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <ImageButton
+            android:id="@+id/accept_button"
             android:layout_width="0dp"
             android:layout_height="46dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:backgroundTint="@color/red_accent"
-            android:layout_gravity="bottom" >
-
-            <ImageView
-                android:id="@+id/accept_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_accept"
-                android:layout_gravity="center" />
-
-        </androidx.cardview.widget.CardView>
+            android:background="@drawable/button_deny"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_accept_vector" />
 
     </LinearLayout>
-
-
 
 </LinearLayout>
