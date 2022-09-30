@@ -11,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mynotes.MyNotesApplication
-import com.example.mynotes.R
 import com.example.mynotes.databinding.FragmentFirstBinding
 import com.example.mynotes.ui.DbViewModel
 import com.example.mynotes.ui.DbViewModelFactory
@@ -25,15 +24,17 @@ class FirstFragment : Fragment() {
         private val sdf =
             SimpleDateFormat("dd MMM yyyy HH:mm", Locale("en", "VietNam"))
         val CURRENT_TIME: String = sdf.format(Date())
+
+        private var HOME_STATE = "Default"
     }
 
     private var _binding: FragmentFirstBinding? = null
 
     private val binding get() = _binding!!
 
-    private val adapter = MyNoteAdapter()
+    private lateinit var adapter: MyNoteAdapter
 
-    private val dbViewModel : DbViewModel by activityViewModels {
+    private val dbViewModel: DbViewModel by activityViewModels {
         DbViewModelFactory(
             (activity?.application as MyNotesApplication).database.noteDao()
         )
@@ -49,11 +50,11 @@ class FirstFragment : Fragment() {
 
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+        // Search listen
+        binding.searchView.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
@@ -65,54 +66,70 @@ class FirstFragment : Fragment() {
             }
         })
 
+        // Observe List data and show
         dbViewModel.allNotes.observe(viewLifecycleOwner) {
-            if (it.isNullOrEmpty()) {
-                binding.contentForEmpty.visibility = View.VISIBLE
-                binding.fabBin.visibility = View.INVISIBLE
-            } else {
-                binding.contentForEmpty.visibility = View.INVISIBLE
-                binding.fabBin.visibility = View.VISIBLE
+            if (HOME_STATE == "Default") {
+                if (it.isNullOrEmpty()) {
+                    binding.contentForEmpty.visibility = View.VISIBLE
+                    binding.fabBin.visibility = View.INVISIBLE
+                } else {
+                    binding.contentForEmpty.visibility = View.INVISIBLE
+                    binding.fabBin.visibility = View.VISIBLE
+                }
             }
 
             it.let {
                 adapter.submitList(it)
-                binding.listNote.layoutManager = LinearLayoutManager(requireContext())
+                binding.listNote.layoutManager =
+                    LinearLayoutManager(requireContext())
                 binding.listNote.adapter = adapter
             }
         }
 
+        // OnClick button del in item
+        adapter = MyNoteAdapter(
+            {
+                dbViewModel.confirmDeleteMode(it)
+                dbViewModel.allNotes.observe(viewLifecycleOwner) { list ->
+                    list.let {
+                        adapter.submitList(list)
+                        binding.listNote.layoutManager =
+                            LinearLayoutManager(requireContext())
+                        binding.listNote.adapter = adapter
+                    }
+                }
+            },
+            {
+                dbViewModel.acceptDeleteMode(it)
+                dbViewModel.allNotes.observe(viewLifecycleOwner) { list ->
+                    list.let {
+                        adapter.submitList(list)
+                        binding.listNote.layoutManager =
+                            LinearLayoutManager(requireContext())
+                        binding.listNote.adapter = adapter
+                    }
+                }
+            }
+        )
+        // OnClick Button del in Home Fragment
         binding.fabBin.setOnClickListener {
+            // show button bin in item
+            HOME_STATE = "Delete"
+            dbViewModel.changeDeleteMode()
+
             binding.fabAccept.visibility = View.VISIBLE
             binding.fabBin.visibility = View.INVISIBLE
             binding.fabPlus.visibility = View.INVISIBLE
-
-            // show button bin in item
-            dbViewModel.changeViewType()
-            Log.e("test", dbViewModel.allNotes.value.toString())
-            dbViewModel.allNotes.observe(viewLifecycleOwner) {
-                it.let {
-                    adapter.submitList(it)
-                    binding.listNote.layoutManager = LinearLayoutManager(requireContext())
-                    binding.listNote.adapter = adapter
-                }
-            }
         }
 
         binding.fabAccept.setOnClickListener {
+            HOME_STATE = "Default"
             binding.fabAccept.visibility = View.INVISIBLE
             binding.fabBin.visibility = View.VISIBLE
             binding.fabPlus.visibility = View.VISIBLE
 
             // disable del mode
-            dbViewModel.changeViewType()
-            Log.e("test", dbViewModel.allNotes.value.toString())
-            dbViewModel.allNotes.observe(viewLifecycleOwner) {
-                it.let {
-                    adapter.submitList(it)
-                    binding.listNote.layoutManager = LinearLayoutManager(requireContext())
-                    binding.listNote.adapter = adapter
-                }
-            }
+            dbViewModel.backDefaultMode()
         }
 
         binding.fabPlus.setOnClickListener {
@@ -135,7 +152,8 @@ class FirstFragment : Fragment() {
         dbViewModel.searchNote(searchQuery).observe(viewLifecycleOwner) {
             it.let {
                 adapter.submitList(it)
-                binding.listNote.layoutManager = LinearLayoutManager(requireContext())
+                binding.listNote.layoutManager =
+                    LinearLayoutManager(requireContext())
                 binding.listNote.adapter = adapter
             }
         }

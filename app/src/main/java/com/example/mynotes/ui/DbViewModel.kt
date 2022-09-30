@@ -7,20 +7,45 @@ import kotlinx.coroutines.launch
 
 class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
 
-    companion object {
-
-    }
-
     val allNotes: LiveData<List<MyNote>> = noteDao.getNotes().asLiveData()
 
-    fun changeViewType() {
+    fun changeDeleteMode() {
         for (i in allNotes.value!!.indices) {
-            if (allNotes.value!![i].viewType == 0) {
-                allNotes.value!![i].viewType = 1
-            } else {
-                allNotes.value!![i].viewType = 0
+            updateNote(
+                allNotes.value!![i].id,
+                allNotes.value!![i].nameNote,
+                allNotes.value!![i].content!!,
+                allNotes.value!![i].timeEdit!!,
+                1
+            )
+        }
+    }
+    fun backDefaultMode() {
+        for (i in allNotes.value!!.indices) {
+            updateNote(
+                allNotes.value!![i].id,
+                allNotes.value!![i].nameNote,
+                allNotes.value!![i].content!!,
+                allNotes.value!![i].timeEdit!!,
+                0
+            )
+        }
+    }
+
+    fun confirmDeleteMode(note: MyNote) {
+        for (i in allNotes.value!!.indices) {
+            if (note.id == allNotes.value!![i].id) {
+                allNotes.value!![i].viewType = 2
             }
         }
+    }
+
+    fun acceptDeleteMode(note: MyNote) {
+        deleteNote(note)
+    }
+
+    fun denyDeleteMode(note: MyNote) {
+        note.viewType = 1
     }
 
     private fun insertNote(note: MyNote) {

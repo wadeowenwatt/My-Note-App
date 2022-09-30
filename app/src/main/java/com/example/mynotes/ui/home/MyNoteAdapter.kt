@@ -1,9 +1,10 @@
 package com.example.mynotes.ui.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.navigation.findNavController
@@ -13,7 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotes.R
 import com.example.mynotes.data.MyNote
 
-class MyNoteAdapter :
+class MyNoteAdapter(
+    val enableDeleteMode: (note: MyNote) -> Unit,
+    val acceptDeleteMode: (note: MyNote) -> Unit
+) :
     ListAdapter<MyNote, RecyclerView.ViewHolder>(DiffCallback) {
 
     companion object {
@@ -44,15 +48,15 @@ class MyNoteAdapter :
         RecyclerView.ViewHolder(itemView) {
         val nameNote: TextView = itemView.findViewById(R.id.name_of_note)
         val previewNote: TextView = itemView.findViewById(R.id.preview_note)
-        val btnDel: ImageView = itemView.findViewById(R.id.delete_button)
+        val btnDel: ImageButton = itemView.findViewById(R.id.delete_button)
     }
 
     class MyNoteViewHolder2(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val nameNote: TextView = itemView.findViewById(R.id.name_of_note)
         val previewNote: TextView = itemView.findViewById(R.id.preview_note)
-        val btnAccept: ImageView = itemView.findViewById(R.id.accept_button)
-        val btnDeny: ImageView = itemView.findViewById(R.id.deny_button)
+        val btnAccept: ImageButton = itemView.findViewById(R.id.accept_button)
+        val btnDeny: ImageButton = itemView.findViewById(R.id.deny_button)
     }
 
     override fun onCreateViewHolder(
@@ -89,25 +93,40 @@ class MyNoteAdapter :
     ) {
         val element = getItem(position)
 
-        if (holder is MyNoteViewHolder) {
-            holder.nameNote.text = element.nameNote
-            holder.previewNote.text = element.content
-            holder.layout.setOnClickListener {
-                val action =
-                    FirstFragmentDirections.actionFirstFragmentToSecondFragment(
-                        element.id,
-                        element.nameNote,
-                        element.content.toString(),
-                        "seen",
-                        element.timeEdit.toString()
-                    )
-                it.findNavController().navigate(action)
+        when (holder) {
+            is MyNoteViewHolder -> {
+                holder.nameNote.text = element.nameNote
+                holder.previewNote.text = element.content
+                holder.layout.setOnClickListener {
+                    val action =
+                        FirstFragmentDirections.actionFirstFragmentToSecondFragment(
+                            element.id,
+                            element.nameNote,
+                            element.content.toString(),
+                            "seen",
+                            element.timeEdit.toString()
+                        )
+                    it.findNavController().navigate(action)
+                }
             }
-        } else if (holder is MyNoteViewHolder1) {
-            holder.nameNote.text = element.nameNote
-            holder.previewNote.text = element.content
-            holder.btnDel.setOnClickListener {
-
+            is MyNoteViewHolder1 -> {
+                holder.nameNote.text = element.nameNote
+                holder.previewNote.text = element.content
+                holder.btnDel.setOnClickListener {
+                    enableDeleteMode(element)
+                    Log.e("test click:", "click")
+                }
+            }
+            is MyNoteViewHolder2 -> {
+                holder.nameNote.text = element.nameNote
+                holder.previewNote.text = element.content
+                holder.btnAccept.setOnClickListener {
+                    acceptDeleteMode(element)
+                    Log.e("test click acc:", "click")
+                }
+                holder.btnDeny.setOnClickListener {
+                    Log.e("test click deny:", "click")
+                }
             }
         }
     }
