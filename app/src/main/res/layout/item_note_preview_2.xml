@@ -5,8 +5,8 @@
     android:id="@+id/big_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginBottom="18dp">
+    android:layout_marginBottom="18dp"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_item"
@@ -39,16 +39,16 @@
                 android:layout_height="0dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/regular_poppins"
+                android:maxLines="4"
                 android:paddingTop="7dp"
                 android:textColor="@color/dark_primary"
                 android:textSize="14sp"
-                android:maxLines="4"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/name_of_note"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices vehicula iaculis. Aliquam at accumsan leo. Proin in diam quam. Pellentesque habitant morbi ..."/>
-            
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices vehicula iaculis. Aliquam at accumsan leo. Proin in diam quam. Pellentesque habitant morbi ..." />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
@@ -57,8 +57,8 @@
         android:id="@+id/delete_btn_layout"
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:backgroundTint="@color/red_accent"
         android:layout_gravity="bottom"
+        android:backgroundTint="@color/red_accent"
         android:visibility="gone"
         tools:visibility="gone">
 
@@ -66,8 +66,8 @@
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_bin"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:src="@drawable/ic_bin" />
 
     </androidx.cardview.widget.CardView>
 
@@ -75,48 +75,33 @@
         android:id="@+id/accept_deny_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
         android:layout_gravity="bottom"
-        android:visibility="gone"
-        tools:visibility="gone">
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="2"
+        tools:visibility="visible">
 
-        <androidx.cardview.widget.CardView
+        <ImageButton
+            android:id="@+id/deny_button"
             android:layout_width="0dp"
             android:layout_height="46dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:backgroundTint="@color/green_accent"
-            android:layout_gravity="bottom" >
+            android:background="@color/green_accent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_deny" />
 
-            <ImageView
-                android:id="@+id/deny_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleX="0.6"
-                android:scaleY="0.6"
-                android:src="@drawable/ic_deny"
-                android:layout_gravity="center" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <ImageButton
+            android:id="@+id/accept_button"
             android:layout_width="0dp"
             android:layout_height="46dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:backgroundTint="@color/red_accent"
-            android:layout_gravity="bottom" >
-
-            <ImageView
-                android:id="@+id/accept_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_accept"
-                android:layout_gravity="center" />
-
-        </androidx.cardview.widget.CardView>
+            android:background="@color/red_accent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_accept" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

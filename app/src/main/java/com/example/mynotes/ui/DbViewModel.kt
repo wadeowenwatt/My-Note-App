@@ -9,6 +9,45 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
 
     val allNotes: LiveData<List<MyNote>> = noteDao.getNotes().asLiveData()
 
+    fun changeDeleteMode() {
+        for (i in allNotes.value!!.indices) {
+            updateNote(
+                allNotes.value!![i].id,
+                allNotes.value!![i].nameNote,
+                allNotes.value!![i].content!!,
+                allNotes.value!![i].timeEdit!!,
+                1
+            )
+        }
+    }
+    fun backDefaultMode() {
+        for (i in allNotes.value!!.indices) {
+            updateNote(
+                allNotes.value!![i].id,
+                allNotes.value!![i].nameNote,
+                allNotes.value!![i].content!!,
+                allNotes.value!![i].timeEdit!!,
+                0
+            )
+        }
+    }
+
+    fun confirmDeleteMode(note: MyNote) {
+        for (i in allNotes.value!!.indices) {
+            if (note.id == allNotes.value!![i].id) {
+                allNotes.value!![i].viewType = 2
+            }
+        }
+    }
+
+    fun acceptDeleteMode(note: MyNote) {
+        deleteNote(note)
+    }
+
+    fun denyDeleteMode(note: MyNote) {
+        note.viewType = 1
+    }
+
     private fun insertNote(note: MyNote) {
         viewModelScope.launch {
             noteDao.insert(note)
@@ -33,15 +72,23 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
         }
     }
 
+//    private fun updateViewType(note: MyNote) {
+//        viewModelScope.launch {
+//            noteDao.update(note)
+//        }
+//    }
+
     private fun getNewNoteEntry(
         nameNote: String,
         content: String,
-        timeEdit: String
+        timeEdit: String,
+        viewType: Int
     ): MyNote {
         return MyNote(
             nameNote = nameNote,
             content = content,
-            timeEdit = timeEdit
+            timeEdit = timeEdit,
+            viewType = viewType
         )
     }
 
@@ -49,22 +96,25 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
         noteId: Int,
         nameNote: String,
         content: String,
-        timeEdit: String
+        timeEdit: String,
+        viewType: Int
     ): MyNote {
         return MyNote(
             id = noteId,
             nameNote = nameNote,
             content = content,
-            timeEdit = timeEdit
+            timeEdit = timeEdit,
+            viewType = viewType
         )
     }
 
     fun addNewNote(
         nameNote: String,
         content: String,
-        timeEdit: String
+        timeEdit: String,
+        viewType: Int
     ) {
-        val newNote = getNewNoteEntry(nameNote, content, timeEdit)
+        val newNote = getNewNoteEntry(nameNote, content, timeEdit, viewType)
         insertNote(newNote)
     }
 
@@ -72,9 +122,11 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
         noteId: Int,
         nameNote: String,
         content: String,
-        timeEdit: String
+        timeEdit: String,
+        viewType: Int
     ) {
-        val noteUpdated = getUpdatedNoteEntry(noteId, nameNote, content, timeEdit)
+        val noteUpdated =
+            getUpdatedNoteEntry(noteId, nameNote, content, timeEdit, viewType)
         updateNote(noteUpdated)
     }
 
@@ -82,9 +134,11 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
         noteId: Int,
         nameNote: String,
         content: String,
-        timeEdit: String
+        timeEdit: String,
+        viewType: Int
     ) {
-        val noteDelete = getUpdatedNoteEntry(noteId, nameNote, content, timeEdit)
+        val noteDelete =
+            getUpdatedNoteEntry(noteId, nameNote, content, timeEdit, viewType)
         deleteNote(noteDelete)
     }
 

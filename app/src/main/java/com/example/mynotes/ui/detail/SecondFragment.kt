@@ -191,7 +191,8 @@ class SecondFragment : Fragment() {
             dbViewModel.addNewNote(
                 binding.editNoteName.text.toString(),
                 binding.editNote.text.toString(),
-                binding.timeWriteNote.text.toString()
+                binding.timeWriteNote.text.toString(),
+                0
             )
 
         }
@@ -203,7 +204,8 @@ class SecondFragment : Fragment() {
                 it,
                 binding.editNoteName.text.toString(),
                 binding.editNote.text.toString(),
-                binding.timeWriteNote.text.toString()
+                binding.timeWriteNote.text.toString(),
+                0
             )
         }
     }
@@ -215,7 +217,8 @@ class SecondFragment : Fragment() {
                     it,
                     binding.editNoteName.text.toString(),
                     binding.editNote.text.toString(),
-                    binding.timeWriteNote.text.toString()
+                    binding.timeWriteNote.text.toString(),
+                    0
                 )
             }
         }
