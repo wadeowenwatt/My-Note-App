@@ -35,7 +35,13 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
     fun confirmDeleteMode(note: MyNote) {
         for (i in allNotes.value!!.indices) {
             if (note.id == allNotes.value!![i].id) {
-                allNotes.value!![i].viewType = 2
+                updateNote(
+                    allNotes.value!![i].id,
+                    allNotes.value!![i].nameNote,
+                    allNotes.value!![i].content!!,
+                    allNotes.value!![i].timeEdit!!,
+                    2
+                )
             }
         }
     }
@@ -45,7 +51,17 @@ class DbViewModel(private val noteDao: NoteDao) : ViewModel() {
     }
 
     fun denyDeleteMode(note: MyNote) {
-        note.viewType = 1
+        for (i in allNotes.value!!.indices) {
+            if (note.id == allNotes.value!![i].id) {
+                updateNote(
+                    allNotes.value!![i].id,
+                    allNotes.value!![i].nameNote,
+                    allNotes.value!![i].content!!,
+                    allNotes.value!![i].timeEdit!!,
+                    1
+                )
+            }
+        }
     }
 
     private fun insertNote(note: MyNote) {

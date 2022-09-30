@@ -67,8 +67,6 @@ class FirstFragment : Fragment() {
             }
         })
 
-
-        
         // this code make show hint always in searchview and not focus it (disable block onActionViewExpanded())
         // binding.searchView.onActionViewExpanded()
         // Handler().postDelayed(Runnable { binding.searchView.clearFocus() }, 300)
@@ -97,25 +95,13 @@ class FirstFragment : Fragment() {
         adapter = MyNoteAdapter(
             {
                 dbViewModel.confirmDeleteMode(it)
-                dbViewModel.allNotes.observe(viewLifecycleOwner) { list ->
-                    list.let {
-                        adapter.submitList(list)
-                        binding.listNote.layoutManager =
-                            LinearLayoutManager(requireContext())
-                        binding.listNote.adapter = adapter
-                    }
-                }
             },
             {
                 dbViewModel.acceptDeleteMode(it)
-                dbViewModel.allNotes.observe(viewLifecycleOwner) { list ->
-                    list.let {
-                        adapter.submitList(list)
-                        binding.listNote.layoutManager =
-                            LinearLayoutManager(requireContext())
-                        binding.listNote.adapter = adapter
-                    }
-                }
+            },
+            {
+                dbViewModel.denyDeleteMode(it)
+
             }
         )
         // OnClick Button del in Home Fragment
@@ -137,6 +123,17 @@ class FirstFragment : Fragment() {
 
             // disable del mode
             dbViewModel.backDefaultMode()
+            dbViewModel.allNotes.observe(viewLifecycleOwner) {
+                if (HOME_STATE == "Default") {
+                    if (it.isNullOrEmpty()) {
+                        binding.contentForEmpty.visibility = View.VISIBLE
+                        binding.fabBin.visibility = View.INVISIBLE
+                    } else {
+                        binding.contentForEmpty.visibility = View.INVISIBLE
+                        binding.fabBin.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
 
         binding.fabPlus.setOnClickListener {

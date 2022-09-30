@@ -16,7 +16,8 @@ import com.example.mynotes.data.MyNote
 
 class MyNoteAdapter(
     val enableDeleteMode: (note: MyNote) -> Unit,
-    val acceptDeleteMode: (note: MyNote) -> Unit
+    val acceptDeleteMode: (note: MyNote) -> Unit,
+    val denyDeleteMode: (note: MyNote) -> Unit
 ) :
     ListAdapter<MyNote, RecyclerView.ViewHolder>(DiffCallback) {
 
@@ -125,6 +126,7 @@ class MyNoteAdapter(
                     Log.e("test click acc:", "click")
                 }
                 holder.btnDeny.setOnClickListener {
+                    denyDeleteMode(element)
                     Log.e("test click deny:", "click")
                 }
             }
