@@ -123,8 +123,22 @@ class FirstFragment : Fragment() {
 
         binding.fabAccept.setOnClickListener {
             HOME_STATE = "Default"
-            // disable del mode
+
             dbViewModel.backDefaultMode()
+            dbViewModel.allNotes.observe(viewLifecycleOwner) {
+                if (HOME_STATE == "Default") {
+                    if (it.isNullOrEmpty()) {
+                        binding.contentForEmpty.visibility = View.VISIBLE
+                        binding.fabBin.visibility = View.INVISIBLE
+
+                        binding.fabAccept.visibility = View.INVISIBLE
+                        binding.fabPlus.visibility = View.VISIBLE
+                    } else {
+                        binding.contentForEmpty.visibility = View.INVISIBLE
+                        binding.fabBin.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
 
         adapter = MyNoteAdapter(
