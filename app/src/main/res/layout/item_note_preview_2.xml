@@ -87,9 +87,8 @@
             android:layout_height="46dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/green_accent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_deny" />
+            android:background="@drawable/button_accept"
+            android:src="@drawable/ic_deny_vector" />
 
         <ImageButton
             android:id="@+id/accept_button"
@@ -97,9 +96,9 @@
             android:layout_height="46dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/red_accent"
+            android:background="@drawable/button_deny"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_accept" />
+            android:src="@drawable/ic_accept_vector" />
 
     </LinearLayout>
 

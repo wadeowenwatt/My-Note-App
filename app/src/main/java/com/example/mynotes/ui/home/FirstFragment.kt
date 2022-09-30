@@ -2,7 +2,6 @@ package com.example.mynotes.ui.home
 
 import android.os.Bundle
 import android.util.Log
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,20 +66,40 @@ class FirstFragment : Fragment() {
             }
         })
 
-        // this code make show hint always in searchview and not focus it (disable block onActionViewExpanded())
-        // binding.searchView.onActionViewExpanded()
-        // Handler().postDelayed(Runnable { binding.searchView.clearFocus() }, 300)
-        
         // Observe List data and show
-        dbViewModel.allNotes.observe(viewLifecycleOwner) {
+        dbViewModel.allNotes.observe(viewLifecycleOwner) { it ->
+
             if (HOME_STATE == "Default") {
                 if (it.isNullOrEmpty()) {
                     binding.contentForEmpty.visibility = View.VISIBLE
                     binding.fabBin.visibility = View.INVISIBLE
+
+                    binding.fabAccept.visibility = View.INVISIBLE
+                    binding.fabPlus.visibility = View.VISIBLE
                 } else {
                     binding.contentForEmpty.visibility = View.INVISIBLE
                     binding.fabBin.visibility = View.VISIBLE
+
+                    binding.fabAccept.visibility = View.INVISIBLE
+                    binding.fabPlus.visibility = View.VISIBLE
                 }
+
+                binding.fabPlus.setOnClickListener {
+                    val action =
+                        FirstFragmentDirections.actionFirstFragmentToSecondFragment(
+                            0,
+                            "",
+                            "",
+                            "create",
+                            CURRENT_TIME
+                        )
+                    findNavController().navigate(action)
+                }
+
+            } else if (HOME_STATE == "Delete") {
+                binding.fabAccept.visibility = View.VISIBLE
+                binding.fabBin.visibility = View.INVISIBLE
+                binding.fabPlus.visibility = View.INVISIBLE
             }
 
             it.let {
@@ -91,7 +110,23 @@ class FirstFragment : Fragment() {
             }
         }
 
-        // OnClick button del in item
+        // this code make show hint always in searchview and not focus it (disable block onActionViewExpanded())
+        // binding.searchView.onActionViewExpanded()
+        // Handler().postDelayed(Runnable { binding.searchView.clearFocus() }, 300)
+
+        // OnClick Button del in Home Fragment
+        binding.fabBin.setOnClickListener {
+            // show button bin in item
+            HOME_STATE = "Delete"
+            dbViewModel.changeDeleteMode()
+        }
+
+        binding.fabAccept.setOnClickListener {
+            HOME_STATE = "Default"
+            // disable del mode
+            dbViewModel.backDefaultMode()
+        }
+
         adapter = MyNoteAdapter(
             {
                 dbViewModel.confirmDeleteMode(it)
@@ -101,52 +136,10 @@ class FirstFragment : Fragment() {
             },
             {
                 dbViewModel.denyDeleteMode(it)
-
             }
         )
-        // OnClick Button del in Home Fragment
-        binding.fabBin.setOnClickListener {
-            // show button bin in item
-            HOME_STATE = "Delete"
-            dbViewModel.changeDeleteMode()
 
-            binding.fabAccept.visibility = View.VISIBLE
-            binding.fabBin.visibility = View.INVISIBLE
-            binding.fabPlus.visibility = View.INVISIBLE
-        }
 
-        binding.fabAccept.setOnClickListener {
-            HOME_STATE = "Default"
-            binding.fabAccept.visibility = View.INVISIBLE
-            binding.fabBin.visibility = View.VISIBLE
-            binding.fabPlus.visibility = View.VISIBLE
-
-            // disable del mode
-            dbViewModel.backDefaultMode()
-            dbViewModel.allNotes.observe(viewLifecycleOwner) {
-                if (HOME_STATE == "Default") {
-                    if (it.isNullOrEmpty()) {
-                        binding.contentForEmpty.visibility = View.VISIBLE
-                        binding.fabBin.visibility = View.INVISIBLE
-                    } else {
-                        binding.contentForEmpty.visibility = View.INVISIBLE
-                        binding.fabBin.visibility = View.VISIBLE
-                    }
-                }
-            }
-        }
-
-        binding.fabPlus.setOnClickListener {
-            val action =
-                FirstFragmentDirections.actionFirstFragmentToSecondFragment(
-                    0,
-                    "",
-                    "",
-                    "create",
-                    CURRENT_TIME
-                )
-            findNavController().navigate(action)
-        }
 
     }
 
@@ -163,8 +156,19 @@ class FirstFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        Log.e("test lifecycle", "stop")
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.e("test lifecycle", "destroyView")
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("test lifecycle", "destroy")
     }
 }

@@ -133,13 +133,12 @@ class SecondFragment : Fragment() {
             if (MODE == "create") {
                 addNewNote()
                 findNavController().popBackStack()
-            } else {
+            } else if (MODE == "edit") {
                 updateNote()
+                binding.fabSave.visibility = View.INVISIBLE
+                binding.fabDeleteCurrentNote.visibility = View.VISIBLE
+                binding.fabEditNote.visibility = View.VISIBLE
             }
-
-            binding.fabSave.visibility = View.INVISIBLE
-            binding.fabDeleteCurrentNote.visibility = View.VISIBLE
-            binding.fabEditNote.visibility = View.VISIBLE
 
             // Update edit time
             binding.timeWriteNote.text = FirstFragment.CURRENT_TIME
@@ -175,7 +174,6 @@ class SecondFragment : Fragment() {
             binding.fabAcceptEdit.visibility = View.INVISIBLE
             binding.fabDenyEdit.visibility = View.INVISIBLE
         }
-
     }
 
     private fun isEntryValid(): Boolean {
